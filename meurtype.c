@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+// inicio de variaveis globais
+
 bool debug = true;
 const float FPS = 100;  
 
