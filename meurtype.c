@@ -18,15 +18,22 @@ const int SCREEN_H = 540;
 const int NAVE_W = 100;
 const int NAVE_H = 50;
 
-const int VELOCIDADE_NAVE = 3;
+const int VELOCIDADE_NAVE = 4;
+
+const int NUM_INIMIGO = 13;
+#define MAX_INIMIGO 8
+
+
 
 
 ALLEGRO_COLOR COR_CENARIO;
+
  typedef struct Nave {
 	
 	int x, y;
 	int vel;
 	int dir_x, dir_y;
+	int pontos;
 	ALLEGRO_COLOR cor;
 
 
@@ -34,17 +41,30 @@ ALLEGRO_COLOR COR_CENARIO;
 typedef struct Bloco{
 	int x, y;
 	ALLEGRO_COLOR cor;
+	bool vidas;
 	int w, h;
+	
 	
 }Bloco;
 typedef struct Tiro{
-	int x;
-	int y;
-	int speed;
+	int x, y;
+	int vel;
+	bool ativo;
 	ALLEGRO_COLOR cor;
-	bool vida;
 }Tiro;
+typedef struct Inimigo{
+	int ID;
+	int x, y;
+	int vel;
+	ALLEGRO_COLOR cor;
+	int borda_x, borda_y;
+	bool ativo;
+	int w,h;
+	int size;
+	bool status;
+	
 
+}Inimigo;
 
 // chamar a função uma única vez
 void intGlobais() {
@@ -76,6 +96,47 @@ void initNave(Nave *nave){
 
 
 }
+// criar init tiro
+void initTiro(Tiro *tiro, Nave *nave){
+
+	tiro->x = nave->x;
+	tiro->y = nave->y;
+	//tiro->ativo = false;
+	tiro->cor = al_map_rgb(255, 0, 0);
+	tiro->vel = 0;
+
+
+}
+// fazer os desnhos para o tiro
+void desenhaTiro(Tiro tiro){
+
+	al_draw_filled_circle(tiro.x, tiro.y, 5, al_map_rgb(255,0,0));// está diferente aqui
+
+}
+//atualizar tiro e seu movimento
+void atualizaTiro(Tiro *tiro, Nave *nave){
+	if(tiro->vel != 5){
+		tiro->x = nave->x;
+		tiro->y = nave->y;
+		
+	}
+
+	
+}
+void saiTiro(Tiro *tiro, Nave *nave, Bloco *bloco){
+
+	if(tiro->vel == 5){
+		tiro->x += tiro->vel;
+	}
+	if(tiro->x > SCREEN_W){
+		initTiro(tiro, nave);
+	}
+	if(tiro->x >= bloco->x && tiro->y >= bloco->y && tiro->x <= bloco->x + bloco->w && tiro->y <= bloco->y + bloco->h){
+		initTiro(tiro, nave);
+	}
+	//tiro->ativo = true;
+}
+// tiro bate no bloco e some com o tiro
 
 
 
@@ -124,70 +185,76 @@ void NaveTela (Nave *nave){
 	if (nave->y - (NAVE_H/2)< 0){
 		nave->y = 0 + (NAVE_H)/2;
     }
-
-
-
-
 }
-void intTiro(Tiro *tiro){
-	tiro->x = 0;
-	tiro->y = 0;
-	tiro->speed = 3;
+// --------------INIMIGO-----------------
+// criar uma função rand
+int random(int n){
+	return rand()%n;
 }
-void initTiro(Tiro tiro[]){
-	for(int i = 0; i < 5; i++){
-		tiro[i].speed = 4;
+int randInt(int min, int max){
+	return  min + random(max - min + 1);
+}
+// inimigo
+void initInimigo(Inimigo inimigo[], int tamanho){
+	for(int i = 0; i < tamanho; i++){
+		//inimigo[i].ID = INIMIGOS;
+		inimigo[i].vel = 5;
+		//inimigo[i].borda_x = 18;
+		//inimigo[i].borda_y = 18;
+		inimigo[i].size = randInt(22, 40);
+		inimigo[i].borda_x= inimigo[i].size-5;
+		inimigo[i].borda_y= inimigo[i].size-5;
+		inimigo[i].ativo = false;
+		inimigo[i].cor = al_map_rgb(rand(), rand(), rand());
 	}
-}
-void desenhaTiro(Tiro tiro[]){
-	for( int i = 0; i < 5; i++){
-		//if(tiro[i].vida ){
-		
-			al_draw_filled_circle(tiro[i].x, tiro[i].y, 5, al_map_rgb(255, 0, 0));
-		
-		//al_draw_filled_circle(tiro[i].x, tiro[i].y, 4, al_map_rgb(255, 255, 255));
 	
 }
-}
-void TiroNave(Tiro tiro[],Nave nave){
-	for(int i = 0; i < 5; i++){
-		
-			tiro[i].x = nave.x;
-			tiro[i].y = nave.y;
-			
-			break;
-	}
-}
-
-
-void atualizaTiro(Tiro tiro[]){
-	for(int i = 0; i < 5; i++)
-	{
-		
-		tiro[i].x += tiro[i].speed;
-		//tiro[i].x += tiro[i].speed;
-	}	
-}
-// colisao entre tiro e bloco
-int colisaoTiroBloco(Tiro tiro[], Bloco bloco){
-	// == <
-	for(int i = 0; i < 1; i++){
-		if(tiro[i].x  > bloco.x && tiro[i].x-4 < bloco.x + bloco.w && tiro[i].y+4 > bloco.y && tiro[i].y-4 < bloco.y + bloco.h){	
-			tiro[i].vida = false;
-			printf("tiro %d", tiro[i].vida);
-			return 1;
+void liberaInimigo(Inimigo inimigo[], int tamanho){
+	for(int i = 0; i < tamanho; i++){
+		if(!inimigo[i].ativo){
+			if(rand() % 500 == 0){
+				//garantir que oinimigo fica na tela
+				//inimigo[i].x = SCREEN_W + rand()%(SCREEN_W);
+				//inimigo[i].y = rand()%(4*SCREEN_H/5);
+				inimigo[i].x = SCREEN_W;
+				inimigo[i].y = 30 + rand() % (SCREEN_H - 60);
+				inimigo[i].ativo = true;
+				break;
+			}
 		}
-	else	
+	}
+		
 	
-	return 0;		
+}
+void atualizarInimigo(Inimigo inimigo[], int tamanho){
+	for(int i = 0; i < tamanho; i++){
+		if(inimigo[i].ativo){
+			inimigo[i].x -= inimigo[i].vel;
+			if(inimigo[i].x < 0){
+				//inimigo[i].x = SCREEN_W + rand()%(SCREEN_W);
+				//inimigo[i].y = rand()%(4*SCREEN_H/5);// mudei o 4 para 10
+				//inimigo[i].vel = VELOCIDADE_NAVE;
+				//inimigo[i].cor = al_map_rgb(rand(), rand(), rand());
+				//inimigo[i].borda_x = rand()%(SCREEN_W);
+				//inimigo[i].borda_y = rand()%(SCREEN_H);
+				inimigo[i].ativo = false;
+			}
+		}
+	}
+
+
+	
+}
+void desenhaInimigo(Inimigo inimigo[], int tamanho){
+	for(int i = 0; i < tamanho; i++){
+		if(inimigo[i].ativo){
+			al_draw_filled_circle(inimigo[i].x, inimigo[i].y, inimigo[i].size, inimigo[i].cor);// mudei o 10 para 20 para 40
+		}
 	}
 }
 
 
-
-// um tiro só pode ser atirado uma vez
-
-
+// --------------COLISÃO DA NAVE COM BLOCO E INIMIGO-----------------
 
 int colisaoNaveBloco(Nave nave, Bloco bloco){
 	// == <
@@ -200,6 +267,15 @@ int colisaoNaveBloco(Nave nave, Bloco bloco){
 	return 0;
 }
 // colisao do tiro com o bloco e o tiro some e continua o jogo 
+void pontos(ALLEGRO_FONT *size_32){
+	int pontos = 0;
+	Tiro tiro;
+	Inimigo inimigo[NUM_INIMIGO];
+	pontos = pontuacao(inimigo);
+	al_draw_textf(size_32, al_map_rgb(255, 255, 255), 0, 0, 0, "Pontos: %d", pontos);
+}
+
+
 
  
 int main(int argc, char **argv){
@@ -253,6 +329,7 @@ int main(int argc, char **argv){
 	
     //inicializa o modulo allegro que carrega as fontes
 	al_init_font_addon();
+	al_init_ttf_addon();
 
 	//inicializa o modulo allegro que entende arquivos tff de fontes
 	if(!al_init_ttf_addon()) {
@@ -282,6 +359,8 @@ int main(int argc, char **argv){
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	//registra na fila os eventos de teclado (ex: pressionar uma tecla)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
+	//
+	
 
 
 	intGlobais();
@@ -289,24 +368,30 @@ int main(int argc, char **argv){
 	Nave nave;
 	initNave(&nave);
 	
-	Tiro tiros[5];
-	initTiro(tiros);
 
 	Bloco bloco;
 	intBloco(&bloco);
 
+	Tiro tiro;
+	initTiro(&tiro, &nave);
+
+	Inimigo inimigo[NUM_INIMIGO];
+	initInimigo(inimigo, NUM_INIMIGO);
 	
-	;
+	//
+
+	
+
+
+
+
+	
+
+	
+	
 
    
-
-
-
-	
-	
-
-
-	//inicia o temporizador
+    //inicia o temporizador
 	al_start_timer(timer);
 	
 	int playing = 1;
@@ -317,8 +402,10 @@ int main(int argc, char **argv){
 
 		//se o tipo de evento for um evento do temporizador, ou seja, se o tempo passou de t para t+1
 		if(ev.type == ALLEGRO_EVENT_TIMER) {
+			
 
 			desenhaCenario();
+			//Pontos(size_32);
 
 			atualizaBloco(&bloco);
 
@@ -332,27 +419,57 @@ int main(int argc, char **argv){
 
 		    //colisaoNaveBloco(nave, bloco);
 			
-			desenhaTiro(tiros);
+			//desenhaTiro(tiros);
 
-			atualizaTiro(tiros);
+			atualizaTiro(&tiro, &nave);
 
-			//colisaoTiroBloco(tiros, bloco);
+			desenhaTiro(tiro);
+            pontos(size_32);
+			//Pontuacao(nave);
+
+			//atualizaInimigo(inimigo);
+
+			//desenhaInimigo(inimigo);
+			atualizarInimigo(inimigo, NUM_INIMIGO);
 			
+			desenhaInimigo(inimigo, NUM_INIMIGO);
+			
+			liberaInimigo(inimigo, NUM_INIMIGO);
+			
+			TiroColideInimigo(tiro, inimigo, NUM_INIMIGO, nave);
+			
+						 
 			//atiraTiro(tiros, nave);
 			
-			colisaoTiroBloco(tiros, bloco);
 			
+			
+			//colisaoTiroBloco(tiros, bloco);
+			saiTiro(&tiro, &nave, &bloco);
+			
+			//playing = !InimigoColide(inimigo, 10, nave);
+			if(InimigoColide(inimigo, bloco , nave)==1){
+				printf("osteorpoer");
+				playing = 0;
+			}
+			
+		    //playing = !InimigoColide(inimigo, NUM_INIMIGO, nave);
 
 
-			playing = !colisaoNaveBloco(nave, bloco);
-
+			if(colisaoNaveBloco(nave, bloco)==1){
+				printf("osteorpoer");
+				playing = 0;
+			}			
+			//playing = !colisaoNaveBloco(nave, bloco);
+			//printf("dasdasd %d ",  InimigoColide(inimigo, 10, nave));
+			
 
 			//atualiza a tela (quando houver algo para mostrar)
 			al_flip_display();
 			
 			if(al_get_timer_count(timer)%(int)FPS == 0)
 				printf("\n%d segundos se passaram...", (int)(al_get_timer_count(timer)/FPS));
-		}
+		
+		}//fim do if do game over
 		//se o tipo de evento for o fechamento da tela (clique no x da janela)
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
 			playing = 0;
@@ -381,7 +498,8 @@ int main(int argc, char **argv){
 
 					break;
 				case ALLEGRO_KEY_SPACE:
-					TiroNave(tiros, nave);
+				tiro.vel=5;
+					
 
 					break;			
 			}
