@@ -266,7 +266,76 @@ int colisaoNaveBloco(Nave nave, Bloco bloco){
 	
 	return 0;
 }
-// colisao do tiro com o bloco e o tiro some e continua o jogo 
+//COLISÃO Do tiro COM INIMIGO SEM VETORES
+
+void TiroColideInimigo(Tiro tiro, Inimigo inimigo[], int tamanho, Nave nave){
+	// tiro clide com inimigo quando a cordenada do tiro for diferente da cordenada da nave
+	for(int i = 0; i < tamanho; i++){
+		if(inimigo[i].ativo){
+			if(tiro.x  > inimigo[i].x - inimigo[i].borda_x && tiro.x < inimigo[i].x + inimigo[i].borda_x && tiro.y  > inimigo[i].y - inimigo[i].borda_y&& tiro.y < inimigo[i].y + inimigo[i].borda_y){
+				inimigo[i].ativo = false;
+				tiro.ativo = true;
+				nave.pontos++;
+			}
+		}
+	}
+
+}
+	
+
+
+			
+		
+	
+	
+
+// COLISÃO DO INIMIGO COM NAVE
+int InimigoColide(Inimigo inimigo[], Bloco bloco, Nave nave){
+	for(int i = 0; i <NUM_INIMIGO; i++){
+		if(inimigo[i].ativo){
+			if(inimigo[i].x - inimigo[i].borda_x <= nave.x  &&
+			inimigo[i].x + inimigo[i].borda_x  >= nave.x &&
+			inimigo[i].y - inimigo[i].borda_y  <= nave.y &&
+			inimigo[i].y + inimigo[i].borda_y >= nave.y  ){
+				return 1;
+			}
+			if(inimigo[i].x - inimigo[i].borda_x <= nave.x - 100 &&
+			inimigo[i].x + inimigo[i].borda_x >= nave.x - 100 &&
+			inimigo[i].y - inimigo[i].borda_y <= nave.y - 25  &&
+			inimigo[i].y + inimigo[i].borda_y >= nave.y - 25){
+				return 1;
+			}
+			if(inimigo[i].x - inimigo[i].borda_x <= nave.x - 100&&
+			inimigo[i].x + inimigo[i].borda_x >= nave.x - 100&&
+			inimigo[i].y - inimigo[i].borda_y <= nave.y + 25 &&
+			inimigo[i].y + inimigo[i].borda_y >= nave.y + 25){
+				return 1;
+			}
+			 
+		}
+	}
+	if( nave.x >= bloco.x && nave.x <= bloco.x + bloco.w +98 && nave.y  >=  bloco.y - 29&& nave.y  <= bloco.y + bloco.h + 29){
+		return 1;
+	}
+	else
+	return 0;
+}
+/*void Pontuacao(Nave nave){
+	al_draw_textf(fonte, al_map_rgb(255, 255, 255), SCREEN_W/2, SCREEN_H/2, ALLEGRO_ALIGN_CENTRE, "Pontos: %d", nave.pontos);
+}
+*/
+int pontuacao(Inimigo inimigo[]){
+	int pontos =0;
+	for(int i=0; i < NUM_INIMIGO; i++){
+		if(inimigo[i].ativo){
+			pontos += (inimigo[i].size*2);
+			//pontos += 10;
+
+
+			return pontos;
+		}
+	}
+}
 void pontos(ALLEGRO_FONT *size_32){
 	int pontos = 0;
 	Tiro tiro;
