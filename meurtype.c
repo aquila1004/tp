@@ -27,17 +27,9 @@ int main(int argc, char **argv){
 			TiroColideInimigo(tiro, inimigo, NUM_INIMIGO, nave);
 			saiTiro(&tiro, &nave, &bloco);
 
-			if(InimigoColide(inimigo, bloco , nave)==1)
-			{
-				printf("osteorpoer");
-				playing = 0;
-			}
-
-			if(colisaoNaveBloco(nave, bloco)==1)
-			{
-				printf("osteorpoer");
-				playing = 0;
-			}			
+			// colisoes
+			InimigoColide(inimigo, bloco, nave);
+			colisaoNaveBloco(nave, bloco);		
 
 			//atualiza a tela (quando houver algo para mostrar)
 			al_flip_display();

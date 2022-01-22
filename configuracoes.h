@@ -15,3 +15,11 @@ const int VELOCIDADE_NAVE = 4;
 #define MAX_INIMIGO 8
 
 ALLEGRO_COLOR COR_CENARIO;
+
+int playing;
+
+ALLEGRO_DISPLAY *display = NULL;
+ALLEGRO_EVENT_QUEUE *event_queue = NULL;
+ALLEGRO_TIMER *timer = NULL;
+ALLEGRO_FONT *size_32;
+ALLEGRO_EVENT ev;
