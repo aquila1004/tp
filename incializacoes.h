@@ -2,6 +2,7 @@ ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
 ALLEGRO_FONT *size_32;
+ALLEGRO_EVENT ev;
 
 Nave nave;
 Bloco bloco;

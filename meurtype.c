@@ -5,61 +5,42 @@ int main(int argc, char **argv){
 	iniciaJogo();
 
 	while(playing) {
-		ALLEGRO_EVENT ev;
+
 		//espera por um evento e o armazena na variavel de evento ev
 		al_wait_for_event(event_queue, &ev);
 
 		//se o tipo de evento for um evento do temporizador, ou seja, se o tempo passou de t para t+1
-		if(ev.type == ALLEGRO_EVENT_TIMER) {
-			
-
+		if(ev.type == ALLEGRO_EVENT_TIMER)
+		{
 			desenhaCenario();
-			//Pontos(size_32);
-
 			atualizaBloco(&bloco);
-
 			desenhaBloco(bloco);
-
 			atualizaNave(&nave);
-
 			desenhaNave(nave);
-
 		    NaveTela(&nave);
-
 			atualizaTiro(&tiro, &nave);
-
 			desenhaTiro(tiro);
             pontos(size_32);
-
 			atualizarInimigo(inimigo, NUM_INIMIGO);
-			
-			desenhaInimigo(inimigo, NUM_INIMIGO);
-			
+			desenhaInimigo(inimigo, NUM_INIMIGO);	
 			liberaInimigo(inimigo, NUM_INIMIGO);
-			
 			TiroColideInimigo(tiro, inimigo, NUM_INIMIGO, nave);
-			
-
 			saiTiro(&tiro, &nave, &bloco);
-			
 
-			if(InimigoColide(inimigo, bloco , nave)==1){
+			if(InimigoColide(inimigo, bloco , nave)==1)
+			{
 				printf("osteorpoer");
 				playing = 0;
 			}
-			
 
-			if(colisaoNaveBloco(nave, bloco)==1){
+			if(colisaoNaveBloco(nave, bloco)==1)
+			{
 				printf("osteorpoer");
 				playing = 0;
 			}			
 
 			//atualiza a tela (quando houver algo para mostrar)
 			al_flip_display();
-			
-			if(al_get_timer_count(timer)%(int)FPS == 0)
-				printf("\n%d segundos se passaram...", (int)(al_get_timer_count(timer)/FPS));
-		
 		}
 		//fim do if do game over
 		//se o tipo de evento for o fechamento da tela (clique no x da janela)
@@ -96,44 +77,36 @@ int main(int argc, char **argv){
 					break;			
 			}
 		}
-		
-		
-		else if(ev.type == ALLEGRO_EVENT_KEY_UP){
-
-			
-		switch (ev.keyboard.keycode)
+		else if(ev.type == ALLEGRO_EVENT_KEY_UP)
 		{
-		case ALLEGRO_KEY_W:
-			nave.dir_y++;
-			break;
+			switch (ev.keyboard.keycode)
+			{
+				case ALLEGRO_KEY_W:
+					nave.dir_y++;
+					break;
 
-		case ALLEGRO_KEY_S:
+				case ALLEGRO_KEY_S:
 
-		    nave.dir_y--;
-   			break;
-		
-		case ALLEGRO_KEY_A:
-			nave.dir_x++;
-			break;
+					nave.dir_y--;
+					break;
+				
+				case ALLEGRO_KEY_A:
+					nave.dir_x++;
+					break;
 
-		case ALLEGRO_KEY_D:
-		    nave.dir_x--;
-   			break;
-		
+				case ALLEGRO_KEY_D:
+					nave.dir_x--;
+					break;
+			}
 		}
-		
-		
-		}
 
-	} //fim do while
+	}
      
-	//procedimentos de fim de jogo (fecha a tela, limpa a memoria, etc)
 	
- 
+	
+	//procedimentos de fim de jogo (fecha a tela, limpa a memoria, etc)
 	al_destroy_timer(timer);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);
-   
- 
 	return 0;
 }
