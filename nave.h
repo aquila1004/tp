@@ -28,7 +28,6 @@ void desenhaNave(Nave nave)
 
 void atualizaNave(Nave *nave)
 {
-	printf("nave->x, nave->y %d %d\n", nave->x, nave->y);
 	nave->y += nave->dir_y * nave->vel;
 	nave->x += nave->dir_x * nave->vel;
 }
