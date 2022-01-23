@@ -28,24 +28,34 @@ void desenhaNave(Nave nave)
 
 void atualizaNave(Nave *nave)
 {
+	printf("nave->x, nave->y %d %d\n", nave->x, nave->y);
 	nave->y += nave->dir_y * nave->vel;
 	nave->x += nave->dir_x * nave->vel;
 }
 //limitar a tela para nave nao sumir
 void NaveTela (Nave *nave)
-{		
-	if (nave->x > SCREEN_W){
-		nave->x = SCREEN_W ;
-		}
-	
-	if (nave->x - NAVE_W < 0){
-		nave->x = 0 + NAVE_W;
-    }
-	if (nave->y + (NAVE_H/2) > SCREEN_H){
-		nave->y = SCREEN_H -(NAVE_H/2);
-		}
-	
-	if (nave->y - (NAVE_H/2)< 0){
-		nave->y = 0 + (NAVE_H)/2;
-    }
+{	
+	// verifica se a nave não ultrapassou o limite da tela pela direita	
+	if (nave->x > SCREEN_W - NAVE_W)
+	{
+		nave->x = SCREEN_W - NAVE_W;
+	}
+
+	// verifica se a nave não ultrapassou o limite da tela pela esquerda	
+	if (nave->x  < 0)
+	{
+		nave->x = 0;
+	}
+
+	// verifica se a nave não ultrapassou o limite da tela por baixo
+	if (nave->y > SCREEN_H - NAVE_H)
+	{
+		nave->y = SCREEN_H - NAVE_H;
+	}
+
+	// verifica se a nave não ultrapassou o limite da tela por cima	
+	if (nave->y  < 0)
+	{
+		nave->y = 0;
+	}
 }
