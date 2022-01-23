@@ -17,6 +17,7 @@ void initTiro(Tiro *tiro, Nave *nave)
 	tiro->y = nave->y + NAVE_H/2;
 	tiro->cor = al_map_rgb(255, 0, 0);
 	tiro->vel = 0;
+	tiro->ativo = false;
 }
 
 // fazer os desnhos para o tiro
@@ -37,13 +38,23 @@ void atualizaTiro(Tiro *tiro, Nave *nave)
 
 void saiTiro(Tiro *tiro, Nave *nave, Bloco *bloco)
 {
-	if(tiro->vel == 5){
+
+	// se a velocidade do tiro for 5
+	if(tiro->vel == 5)
+	{
+		tiro->ativo = true;
 		tiro->x += tiro->vel;
 	}
-	if(tiro->x > SCREEN_W){
+
+	// se o tiro não estiver na tela
+	if(tiro->x > SCREEN_W)
+	{
 		initTiro(tiro, nave);
 	}
-	if(tiro->x >= bloco->x && tiro->y >= bloco->y && tiro->x <= bloco->x + bloco->w && tiro->y <= bloco->y + bloco->h){
+
+	// se o colidiu com um bloco
+	if(tiro->x >= bloco->x && tiro->y >= bloco->y && tiro->x <= bloco->x + bloco->w && tiro->y <= bloco->y + bloco->h)
+	{
 		initTiro(tiro, nave);
 	}
 }

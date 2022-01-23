@@ -32,9 +32,12 @@ void colisoesNave(Inimigo inimigo[], Bloco bloco, Nave nave)
 void TiroColideInimigo(Tiro tiro, Inimigo inimigo[], int tamanho, Nave nave)
 {
 	// tiro clide com inimigo quando a cordenada do tiro for diferente da cordenada da nave
-	for(int i = 0; i < tamanho; i++){
-		if(inimigo[i].ativo){
-			if(tiro.x  > inimigo[i].x - inimigo[i].borda_x && tiro.x < inimigo[i].x + inimigo[i].borda_x && tiro.y  > inimigo[i].y - inimigo[i].borda_y&& tiro.y < inimigo[i].y + inimigo[i].borda_y){
+	for(int i = 0; i < tamanho; i++)
+	{
+		if(inimigo[i].ativo && tiro.ativo)
+		{
+			if(tiro.x  > inimigo[i].x - inimigo[i].borda_x && tiro.x < inimigo[i].x + inimigo[i].borda_x && tiro.y  > inimigo[i].y - inimigo[i].borda_y&& tiro.y < inimigo[i].y + inimigo[i].borda_y)
+			{
 				inimigo[i].ativo = false;
 				tiro.ativo = true;
 				nave.pontos++;
