@@ -5,29 +5,20 @@ void TiroColideInimigo(Tiro tiro, Inimigo inimigo[], int tamanho, Nave nave);
 // COLISÃO DO INIMIGO COM NAVE
 void InimigoColide(Inimigo inimigo[], Bloco bloco, Nave nave)
 {
-	for(int i = 0; i <NUM_INIMIGO; i++){
-		if(inimigo[i].ativo){
-			if(inimigo[i].x - inimigo[i].borda_x <= nave.x  &&
-			inimigo[i].x + inimigo[i].borda_x  >= nave.x &&
-			inimigo[i].y - inimigo[i].borda_y  <= nave.y &&
-			inimigo[i].y + inimigo[i].borda_y >= nave.y  ){
-				playing = 0;
-			}
-			if(inimigo[i].x - inimigo[i].borda_x <= nave.x - 100 &&
-			inimigo[i].x + inimigo[i].borda_x >= nave.x - 100 &&
-			inimigo[i].y - inimigo[i].borda_y <= nave.y - 25  &&
-			inimigo[i].y + inimigo[i].borda_y >= nave.y - 25){
-				playing = 0;
-			}
-			if(inimigo[i].x - inimigo[i].borda_x <= nave.x - 100&&
-			inimigo[i].x + inimigo[i].borda_x >= nave.x - 100&&
-			inimigo[i].y - inimigo[i].borda_y <= nave.y + 25 &&
-			inimigo[i].y + inimigo[i].borda_y >= nave.y + 25){
-				playing = 0;
-			}
-			 
+	for(int i = 0; i <NUM_INIMIGO; i++)
+	{
+		if(inimigo[i].ativo)
+		{
+			if(inimigo[i].x + inimigo[i].size >= nave.x && inimigo[i].x <= nave.x + NAVE_W)
+			{
+				if(inimigo[i].y + inimigo[i].size >= nave.y && inimigo[i].y <= nave.y + NAVE_H)
+				{
+					playing = 0;
+				}
+			}			 
 		}
 	}
+	
 	if( nave.x >= bloco.x && nave.x <= bloco.x + bloco.w +98 && nave.y  >=  bloco.y - 29&& nave.y  <= bloco.y + bloco.h + 29){
 		playing = 0;
 	}
