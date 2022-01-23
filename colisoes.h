@@ -13,13 +13,17 @@ void InimigoColide(Inimigo inimigo[], Bloco bloco, Nave nave)
 			{
 				if(inimigo[i].y + inimigo[i].size >= nave.y && inimigo[i].y <= nave.y + NAVE_H)
 				{
+					//se a nave colidiu com um inimigo, atualiza o valor do jogo
 					playing = 0;
 				}
 			}			 
 		}
 	}
-	
-	if( nave.x >= bloco.x && nave.x <= bloco.x + bloco.w +98 && nave.y  >=  bloco.y - 29&& nave.y  <= bloco.y + bloco.h + 29){
+
+	//verifica se a nave colidiu com algum bloco
+	if(nave.x < bloco.x + bloco.w && nave.x + NAVE_W > bloco.x && nave.y < bloco.y + bloco.h && nave.y + NAVE_H > bloco.y)
+	{
+		//se a nave colidiu com um bloco, atualiza o valor do jogo
 		playing = 0;
 	}
 }
