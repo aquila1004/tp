@@ -13,9 +13,8 @@ void saiTiro(Tiro *tiro, Nave *nave, Bloco *bloco);
 // criar init tiro
 void initTiro(Tiro *tiro, Nave *nave)
 {
-	tiro->x = nave->x;
-	tiro->y = nave->y;
-	//tiro->ativo = false;
+	tiro->x = nave->x + NAVE_W;
+	tiro->y = nave->y + NAVE_H/2;
 	tiro->cor = al_map_rgb(255, 0, 0);
 	tiro->vel = 0;
 }
@@ -31,8 +30,8 @@ void atualizaTiro(Tiro *tiro, Nave *nave)
 {
 	if(tiro->vel != 5)
     {
-		tiro->x = nave->x;
-		tiro->y = nave->y;	
+		tiro->x = nave->x + NAVE_W;
+		tiro->y = nave->y + NAVE_H/2;	
 	}
 }
 
