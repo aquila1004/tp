@@ -1,9 +1,8 @@
-void InimigoColide(Inimigo inimigo[], Bloco bloco, Nave nave);
-void colisaoNaveBloco(Nave nave, Bloco bloco);
+void colisoesNave(Inimigo inimigo[], Bloco bloco, Nave nave);
 void TiroColideInimigo(Tiro tiro, Inimigo inimigo[], int tamanho, Nave nave);
 
 // COLISÃO DO INIMIGO COM NAVE
-void InimigoColide(Inimigo inimigo[], Bloco bloco, Nave nave)
+void colisoesNave(Inimigo inimigo[], Bloco bloco, Nave nave)
 {
 	for(int i = 0; i <NUM_INIMIGO; i++)
 	{
@@ -24,14 +23,6 @@ void InimigoColide(Inimigo inimigo[], Bloco bloco, Nave nave)
 	if(nave.x < bloco.x + bloco.w && nave.x + NAVE_W > bloco.x && nave.y < bloco.y + bloco.h && nave.y + NAVE_H > bloco.y)
 	{
 		//se a nave colidiu com um bloco, atualiza o valor do jogo
-		playing = 0;
-	}
-}
-
-// --------------COLISÃO DA NAVE COM BLOCO E INIMIGO-----------------
-void colisaoNaveBloco(Nave nave, Bloco bloco)
-{
-	if(nave.x + (NAVE_W/50) > bloco.x && nave.x - NAVE_W < bloco.x + bloco.w && nave.y + (NAVE_H/2) > bloco.y && nave.y - (NAVE_H/2) < bloco.y + bloco.h){
 		playing = 0;
 	}
 }

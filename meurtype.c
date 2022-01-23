@@ -28,8 +28,7 @@ int main(int argc, char **argv){
 			saiTiro(&tiro, &nave, &bloco);
 
 			// colisoes
-			InimigoColide(inimigo, bloco, nave);
-			colisaoNaveBloco(nave, bloco);		
+			colisoesNave(inimigo, bloco, nave);
 
 			//atualiza a tela (quando houver algo para mostrar)
 			al_flip_display();
