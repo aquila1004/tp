@@ -6,8 +6,9 @@ const float FPS = 100;
 const int SCREEN_W = 960;
 const int SCREEN_H = 540;
 
+ALLEGRO_BITMAP *nave_imagem;
 const int NAVE_W = 100;
-const int NAVE_H = 50;
+const int NAVE_H = 100;
 
 const int VELOCIDADE_NAVE = 4;
 

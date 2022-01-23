@@ -78,6 +78,9 @@ int iniciaJogo()
 	//registra na fila os eventos de teclado (ex: pressionar uma tecla)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 
+	// incia a nave
+	nave_imagem = al_load_bitmap("nave.png");
+
 	intGlobais();
 
 	initNave(&nave);

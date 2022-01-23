@@ -23,7 +23,7 @@ void initNave(Nave *nave)
 
 void desenhaNave(Nave nave)
 {
-	al_draw_filled_triangle(nave.x, nave.y, nave.x - NAVE_W, nave.y - NAVE_H/2,  nave.x - NAVE_W, nave.y + NAVE_H/2, nave.cor);
+	al_draw_bitmap(nave_imagem, nave.x, nave.y, 0);
 }
 
 void atualizaNave(Nave *nave)
