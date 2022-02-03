@@ -1,5 +1,7 @@
 void colisoesNave(Inimigo inimigo[], Bloco bloco, Nave nave);
 void TiroColideInimigo(Tiro tiro, Inimigo inimigo[], int tamanho, Nave nave);
+void colideInimigoBloco(Inimigo inimigo[], Bloco bloco);
+void colideInimigo(Inimigo inimigo[], int tamanho);
 
 // COLISÃO DO INIMIGO COM NAVE
 void colisoesNave(Inimigo inimigo[], Bloco bloco, Nave nave)
@@ -13,7 +15,8 @@ void colisoesNave(Inimigo inimigo[], Bloco bloco, Nave nave)
 				if(inimigo[i].y + inimigo[i].size >= nave.y && inimigo[i].y <= nave.y + NAVE_H)
 				{
 					//se a nave colidiu com um inimigo, atualiza o valor do jogo
-					playing = 0;
+					//playing = 0;
+					colisao_nave = true;
 				}
 			}			 
 		}
@@ -23,7 +26,8 @@ void colisoesNave(Inimigo inimigo[], Bloco bloco, Nave nave)
 	if(nave.x < bloco.x + bloco.w && nave.x + NAVE_W > bloco.x && nave.y < bloco.y + bloco.h && nave.y + NAVE_H > bloco.y)
 	{
 		//se a nave colidiu com um bloco, atualiza o valor do jogo
-		playing = 0;
+		//playing = 0;
+		colisao_nave = true;
 	}
 }
 
@@ -39,8 +43,35 @@ void TiroColideInimigo(Tiro tiro, Inimigo inimigo[], int tamanho, Nave nave)
 			if(tiro.x  > inimigo[i].x - inimigo[i].borda_x && tiro.x < inimigo[i].x + inimigo[i].borda_x && tiro.y  > inimigo[i].y - inimigo[i].borda_y&& tiro.y < inimigo[i].y + inimigo[i].borda_y)
 			{
 				inimigo[i].ativo = false;
-				tiro.ativo = true;
-				nave.pontos++;
+				tiro.ativo = false;// era true
+				adicionapontos(); // antes era nave.pontos++;
+			}
+		}
+	}
+}
+void colideInimigoBloco(Inimigo inimigo[], Bloco bloco){
+	for(int i = 0; i < NUM_INIMIGO; i++){
+		if(inimigo[i].ativo){
+			if(inimigo[i].x + inimigo[i].size >= bloco.x && inimigo[i].x <= bloco.x + bloco.w){
+				if(inimigo[i].y + inimigo[i].size >= bloco.y && inimigo[i].y <= bloco.y + bloco.h){
+					inimigo[i].ativo = false;
+				}
+			}
+		}
+	}
+}
+void colideInimigo(Inimigo inimigo[], int tamanho){
+	for(int i = 0; i < tamanho; i++){
+		if(inimigo[i].ativo){
+			for(int j = i+1; j < tamanho; j++){
+				if(inimigo[j].ativo){
+					if(inimigo[i].x + inimigo[i].size >= inimigo[j].x && inimigo[i].x <= inimigo[j].x + inimigo[j].size){
+						if(inimigo[i].y + inimigo[i].size >= inimigo[j].y && inimigo[i].y <= inimigo[j].y + inimigo[j].size){
+							inimigo[i].ativo = false;
+							inimigo[j].ativo = false;
+						}
+					}
+				}
 			}
 		}
 	}

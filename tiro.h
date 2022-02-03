@@ -1,6 +1,8 @@
 typedef struct Tiro{
 	int x, y;
 	int vel;
+	float raio;
+	float aumentaraio;
 	bool ativo;
 	ALLEGRO_COLOR cor;
 }Tiro;
@@ -15,15 +17,17 @@ void initTiro(Tiro *tiro, Nave *nave)
 {
 	tiro->x = nave->x + NAVE_W;
 	tiro->y = nave->y + NAVE_H/2;
+    tiro->raio = 5.0;// aqui eu coloquei o raio do tiro
 	tiro->cor = al_map_rgb(255, 0, 0);
 	tiro->vel = 0;
 	tiro->ativo = false;
+	tiro->aumentaraio = 0;
 }
 
 // fazer os desnhos para o tiro
 void desenhaTiro(Tiro tiro)
 {
-	al_draw_filled_circle(tiro.x, tiro.y, 5, al_map_rgb(255,0,0));// está diferente aqui
+	al_draw_filled_circle(tiro.x, tiro.y, tiro.raio, al_map_rgb(255,0,0));// está diferente aqui
 }
 
 //atualizar tiro e seu movimento
@@ -32,7 +36,11 @@ void atualizaTiro(Tiro *tiro, Nave *nave)
 	if(tiro->vel != 5)
     {
 		tiro->x = nave->x + NAVE_W;
-		tiro->y = nave->y + NAVE_H/2;	
+		tiro->y = nave->y + NAVE_H/2;
+		if(tiro->aumentaraio == 0.5 && tiro->raio < 15.0)
+		{
+			tiro->raio += tiro->aumentaraio;
+		}	
 	}
 }
 

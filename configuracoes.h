@@ -18,9 +18,11 @@ const int VELOCIDADE_NAVE = 4;
 ALLEGRO_COLOR COR_CENARIO;
 
 int playing;
+bool colisao_nave = false;
 
 ALLEGRO_DISPLAY *display = NULL;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_TIMER *timer = NULL;
 ALLEGRO_FONT *size_32;
 ALLEGRO_EVENT ev;
+int pontos = 0;

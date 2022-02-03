@@ -9,12 +9,13 @@
 
 // include de contrucoes
 #include "configuracoes.h"
+#include "arquivo.h"
 #include "rand.h"
 #include "nave.h"
 #include "bloco.h"
 #include "inimigo.h"
 #include "tiro.h"
-#include "colisoes.h"
-#include "pontuacao.h"
 #include "cenario.h"
+#include "pontuacao.h"
+#include "colisoes.h"
 #include "incializacoes.h"

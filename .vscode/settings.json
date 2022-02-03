@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "colisoes.h": "c",
+        "stdlib.h": "c"
+    }
+}

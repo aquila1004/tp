@@ -4,6 +4,7 @@ typedef struct Nave {
 	int dir_x, dir_y;
 	int pontos;
 	ALLEGRO_COLOR cor;
+	
 }Nave;
 
 void initNave(Nave *nave);

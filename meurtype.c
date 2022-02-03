@@ -1,6 +1,6 @@
 #include "includes.h"
 
-int main(int argc, char **argv){
+int main(int argc, char const *argv[]){
 	
 	iniciaJogo();
 
@@ -20,12 +20,19 @@ int main(int argc, char **argv){
 		    NaveTela(&nave);
 			atualizaTiro(&tiro, &nave);
 			desenhaTiro(tiro);
-            pontos(size_32);
+            pontuacao(size_32);
 			atualizarInimigo(inimigo, NUM_INIMIGO);
 			desenhaInimigo(inimigo, NUM_INIMIGO);	
 			liberaInimigo(inimigo, NUM_INIMIGO);
 			TiroColideInimigo(tiro, inimigo, NUM_INIMIGO, nave);
 			saiTiro(&tiro, &nave, &bloco);
+			colideInimigoBloco(inimigo, bloco);
+			colideInimigo(inimigo, NUM_INIMIGO);
+			recorde();
+			//getrecord();
+			//setrecord(pontos);
+			//
+
 
 			// colisoes
 			colisoesNave(inimigo, bloco, nave);
@@ -33,6 +40,7 @@ int main(int argc, char **argv){
 			//atualiza a tela (quando houver algo para mostrar)
 			al_flip_display();
 		}
+	
 		//fim do if do game over
 		//se o tipo de evento for o fechamento da tela (clique no x da janela)
 		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -62,10 +70,11 @@ int main(int argc, char **argv){
 
 					break;
 				case ALLEGRO_KEY_SPACE:
-				tiro.vel=5;
-					
+				{
+					tiro.aumentaraio = tiro.aumentaraio + 0.5;
 
-					break;			
+				}
+				break;			
 			}
 		}
 		else if(ev.type == ALLEGRO_EVENT_KEY_UP)
@@ -88,6 +97,10 @@ int main(int argc, char **argv){
 				case ALLEGRO_KEY_D:
 					nave.dir_x--;
 					break;
+				case ALLEGRO_KEY_SPACE:
+				tiro.vel = 5;
+				
+				break;
 			}
 		}
 
