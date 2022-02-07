@@ -50,13 +50,18 @@ void TiroColideInimigo(Tiro tiro, Inimigo inimigo[], int tamanho, Nave nave)
 	}
 }
 void colideInimigoBloco(Inimigo inimigo[], Bloco bloco){
-	for(int i = 0; i < NUM_INIMIGO; i++){
-		if(inimigo[i].ativo){
-			if(inimigo[i].x + inimigo[i].size >= bloco.x && inimigo[i].x <= bloco.x + bloco.w){
-				if(inimigo[i].y + inimigo[i].size >= bloco.y && inimigo[i].y <= bloco.y + bloco.h){
-					inimigo[i].ativo = false;
-				}
-			}
+	// verifica se algum inimigo colidiu com um bloco
+	for(int i = 0; i < NUM_INIMIGO; i++)
+	{
+		if(inimigo[i].ativo)
+		{
+			if (inimigo[i].x + inimigo[i].size > bloco.x - bloco.w &&
+				inimigo[i].x - inimigo[i].size < bloco.x + bloco.w &&
+				inimigo[i].y + inimigo[i].size > bloco.y - bloco.h &&
+				inimigo[i].y - inimigo[i].size < bloco.y + bloco.h)
+			{
+				inimigo[i].ativo = false;
+			}		 
 		}
 	}
 }
