@@ -66,24 +66,14 @@ void colideInimigoBloco(Inimigo inimigo[], Bloco bloco)
 		}
 	}
 }
-void colideInimigo(Inimigo inimigo[], int tamanho)
-{
-	// verifica se um inimigo colidiu com outro inimigo considerando apenas os inimigos ativos
-	for (int i = 0; i < tamanho; i++)
-	{
-		if (inimigo[i].ativo)
-		{
-			for (int j = 0; j < tamanho; j++)
-			{
-				if (inimigo[j].ativo)
-				{
-					if (i != j)
-					{
-						if (inimigo[i].x + inimigo[i].size > inimigo[j].x - inimigo[j].size &&
-							inimigo[i].x - inimigo[i].size < inimigo[j].x + inimigo[j].size &&
-							inimigo[i].y + inimigo[i].size > inimigo[j].y - inimigo[j].size &&
-							inimigo[i].y - inimigo[i].size < inimigo[j].y + inimigo[j].size)
-						{
+
+void colideInimigo(Inimigo inimigo[], int tamanho){
+	for(int i = 0; i < tamanho; i++){
+		if(inimigo[i].ativo){
+			for(int j = i+1; j < tamanho; j++){
+				if(inimigo[j].ativo){
+					if(inimigo[i].x + inimigo[i].size >= inimigo[j].x && inimigo[i].x <= inimigo[j].x + inimigo[j].size){
+						if(inimigo[i].y + inimigo[i].size >= inimigo[j].y && inimigo[i].y <= inimigo[j].y + inimigo[j].size){
 							inimigo[i].ativo = false;
 							inimigo[j].ativo = false;
 						}
