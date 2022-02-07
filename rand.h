@@ -3,10 +3,10 @@ int randInt(int min, int max);
 
 int random(int n)
 {
-	return rand()%n;
+	return rand() % n;
 }
 
 int randInt(int min, int max)
 {
-	return  min + random(max - min + 1);
+	return min + random(max - min + 1);
 }

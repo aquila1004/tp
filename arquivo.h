@@ -1,7 +1,7 @@
-bool escreveInteiroArquivo(const char * localizacao, int valor);
+bool escreveInteiroArquivo(const char *localizacao, int valor);
 int leInteiroArquivo(const char *localizacao);
 
-bool escreveInteiroArquivo(const char * localizacao, int valor)
+bool escreveInteiroArquivo(const char *localizacao, int valor)
 {
     FILE *file = fopen(localizacao, "w");
 
@@ -16,9 +16,9 @@ bool escreveInteiroArquivo(const char * localizacao, int valor)
     return true;
 }
 
-int leInteiroArquivo(const char * localizacao)
+int leInteiroArquivo(const char *localizacao)
 {
-    FILE* file = fopen (localizacao, "r");
+    FILE *file = fopen(localizacao, "r");
 
     if (file == NULL)
     {
@@ -26,7 +26,7 @@ int leInteiroArquivo(const char * localizacao)
     }
 
     int i = 0;
-    fscanf (file, "%d", &i);
+    fscanf(file, "%d", &i);
 
     return i;
 }
