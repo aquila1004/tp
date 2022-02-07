@@ -1,7 +1,7 @@
 // inicio de variaveis globais
 
 bool debug = true;
-const float FPS = 100;
+const float FPS = 100;  
 
 const int SCREEN_W = 960;
 const int SCREEN_H = 540;
