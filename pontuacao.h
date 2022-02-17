@@ -5,7 +5,6 @@ void adicionapontos(){
 	
 }
 
-
 void pontuacao(ALLEGRO_FONT *size_32){
 	
 	al_draw_textf(size_32, al_map_rgb(255, 255, 255), 0, 0, 0, "Pontos: %d", pontos);

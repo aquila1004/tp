@@ -17,7 +17,7 @@ void initTiro(Tiro *tiro, Nave *nave)
 {
 	tiro->x = nave->x + NAVE_W;
 	tiro->y = nave->y + NAVE_H/2;
-    tiro->raio = 5.0;// aqui eu coloquei o raio do tiro
+    tiro->raio = 4.0;// aqui eu coloquei o raio do tiro
 	tiro->cor = al_map_rgb(255, 0, 0);
 	tiro->vel = 0;
 	tiro->ativo = false;
@@ -37,7 +37,7 @@ void atualizaTiro(Tiro *tiro, Nave *nave)
     {
 		tiro->x = nave->x + NAVE_W;
 		tiro->y = nave->y + NAVE_H/2;
-		if(tiro->aumentaraio == 0.5 && tiro->raio < 15.0)
+		if(tiro->aumentaraio == 0.5 && tiro->raio < 25.0)
 		{
 			tiro->raio += tiro->aumentaraio;
 		}	

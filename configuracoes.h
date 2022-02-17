@@ -12,7 +12,7 @@ const int NAVE_H = 100;
 
 const int VELOCIDADE_NAVE = 4;
 
-#define NUM_INIMIGO 13
+#define NUM_INIMIGO 20
 #define MAX_INIMIGO 8
 
 ALLEGRO_COLOR COR_CENARIO;

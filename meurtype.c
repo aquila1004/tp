@@ -1,5 +1,6 @@
 #include "includes.h"
 
+
 int main(int argc, char const *argv[]){
 	
 	iniciaJogo();
@@ -24,7 +25,7 @@ int main(int argc, char const *argv[]){
 			atualizarInimigo(inimigo, NUM_INIMIGO);
 			desenhaInimigo(inimigo, NUM_INIMIGO);	
 			liberaInimigo(inimigo, NUM_INIMIGO);
-			TiroColideInimigo(tiro, inimigo, NUM_INIMIGO, nave);
+			TiroColideInimigo(&tiro, inimigo, NUM_INIMIGO, &nave);
 			saiTiro(&tiro, &nave, &bloco);
 			colideInimigoBloco(inimigo, bloco);
 			colideInimigo(inimigo, NUM_INIMIGO);
@@ -74,8 +75,9 @@ int main(int argc, char const *argv[]){
 					tiro.aumentaraio = tiro.aumentaraio + 0.5;
 
 				}
-				break;			
+				break;
 			}
+				
 		}
 		else if(ev.type == ALLEGRO_EVENT_KEY_UP)
 		{

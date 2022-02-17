@@ -21,7 +21,7 @@ void initInimigo(Inimigo inimigo[], int tamanho)
 {
 	for(int i = 0; i < tamanho; i++)
     {
-		inimigo[i].vel = 5;
+		inimigo[i].vel = 6;
 		inimigo[i].size = randInt(22, 40);
 		inimigo[i].borda_x= inimigo[i].size-5;
 		inimigo[i].borda_y= inimigo[i].size-5;
